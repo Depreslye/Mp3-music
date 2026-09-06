@@ -32,7 +32,6 @@ html, body {
   align-items: center;
   border: 1px solid #555;
 }
-
 /* Screen Shell */
 .screen {
   width: 100%;
@@ -107,7 +106,6 @@ html, body {
   border-radius: 0 1px 1px 0;
 }
 .battery b { display: block; width: 80%; height: 100%; background: linear-gradient(180deg, #6ee049, #429f27); border-radius: 1px; }
-
 /* Header Bar (Classic iOS Glossy Blue/Grey) */
 .header {
   position: absolute;
@@ -160,7 +158,6 @@ html, body {
 }
 .glassBtn.back { left: 6px; font-size: 14px; padding-left: 8px; }
 .glassBtn.queue { right: 6px; font-size: 16px; min-width: 34px; }
-
 /* Main Screen Views */
 .home {
   position: absolute;
@@ -213,7 +210,6 @@ html, body {
   background: #b8c4d0;
   border-bottom: 1px solid #a0b0c0;
 }
-
 /* List Rows */
 .row {
   height: 52px;
@@ -259,7 +255,6 @@ html, body {
   box-shadow: 0 1px 1px rgba(0,0,0,0.1);
   cursor: pointer;
 }
-
 /* Bottom Tab Bar */
 .tabs {
   position: absolute;
@@ -292,7 +287,6 @@ html, body {
   background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 100%);
 }
 .tabs button i { font-style: normal; font-size: 18px; line-height: 1; }
-
 /* Dedicated Full Screen Player View (Now Playing) */
 .player {
   position: absolute;
@@ -304,7 +298,6 @@ html, body {
   flex-direction: column;
 }
 .player.show { display: flex; }
-
 .player-header {
   height: 44px;
   margin-top: 20px;
@@ -316,7 +309,6 @@ html, body {
   position: relative;
   z-index: 10;
 }
-
 .art-container {
   flex: 1;
   position: relative;
@@ -332,7 +324,6 @@ html, body {
   object-fit: contain;
   box-shadow: 0 0 20px rgba(0,0,0,0.8);
 }
-
 /* Controls Bar Overlay at bottom of Player */
 .playerControls {
   height: 110px;
@@ -344,7 +335,6 @@ html, body {
   flex-direction: column;
   justify-content: space-between;
 }
-
 .transport {
   display: flex;
   align-items: center;
@@ -362,7 +352,6 @@ html, body {
 }
 .transport button:active { color: #888; }
 .transport .play-pause { font-size: 30px; width: 40px; }
-
 .seekBox { margin: 2px 0; }
 .seek {
   width: 100%;
@@ -379,11 +368,9 @@ html, body {
   margin-top: 2px;
   font-family: monospace;
 }
-
 .vol { display: flex; align-items: center; gap: 8px; }
 .vol input { width: 100%; height: 4px; accent-color: #d1d1d1; cursor: pointer; }
 .vol-icon { font-size: 10px; color: #888; }
-
 /* Search Box */
 .search-container {
   padding: 6px 8px;
@@ -401,9 +388,7 @@ html, body {
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
   outline: none;
 }
-
 .empty { text-align: center; color: #556677; padding: 40px 20px; font-size: 13px; text-shadow: 0 1px 0 rgba(255,255,255,0.6); }
-
 /* Up Next Queue */
 .queueView {
   position: absolute;
@@ -428,7 +413,6 @@ html, body {
 }
 .qrow { padding: 10px 14px; border-bottom: 1px solid #2a2a2a; font-size: 12px; }
 .qrow.active { color: #3b82f6; font-weight: bold; }
-
 input[type=file] { display: none; }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
@@ -474,7 +458,6 @@ input[type=file] { display: none; }
       <button onclick="tab(this,'search')"><i>⌕</i>Search</button>
       <button onclick="file.click()"><i>↓</i>Downloads</button>
     </nav>
-
     <!-- Full Screen Music Player -->
     <section class="player" id="player">
       <div class="status">
@@ -514,7 +497,6 @@ input[type=file] { display: none; }
         </div>
       </div>
     </section>
-
     <!-- Queue Modal View -->
     <section class="queueView" id="queueView">
       <div class="queueHead">
@@ -523,11 +505,9 @@ input[type=file] { display: none; }
       </div>
       <div id="queueList" style="overflow-y:auto; flex:1;"></div>
     </section>
-
     <input id="file" type="file" accept="audio/*" multiple>
     <audio id="audio"></audio>
   </div>
-
   <!-- Physical Home Button -->
   <div class="home-button" onclick="closePlayer(); goHome();">
     <div class="home-button-icon"></div>
