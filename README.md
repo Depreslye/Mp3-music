@@ -1,2336 +1,517 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
-<title>Music</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>iPod Touch - iOS Classic Experience</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
 <style>
-/* =========================================================
-   IPOD TOUCH / IOS 6 STYLE MUSIC PLAYER
-   ========================================================= */
-
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-    margin:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    font-family:
-        "Helvetica Neue",
-        Helvetica,
-        Arial,
-        sans-serif;
-    background:#111;
-    color:#222;
-}
-
-body{
-    display:flex;
-    justify-content:center;
-}
-
-/* DEVICE */
-
-.device{
-    width:100%;
-    height:100%;
-    max-width:520px;
-    background:#eee;
-    position:relative;
-    overflow:hidden;
-}
-
-/* =========================================================
-   TOP NAVIGATION BAR
-   ========================================================= */
-
-.navbar{
-    height:44px;
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    z-index:20;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:
-        linear-gradient(
-            #fafafa 0%,
-            #eeeeee 48%,
-            #d2d2d2 52%,
-            #bcbcbc 100%
-        );
-
-    border-bottom:1px solid #777;
-    box-shadow:
-        0 1px 2px rgba(0,0,0,.45);
-}
-
-.nav-title{
-    color:#222;
-    font-size:20px;
-    font-weight:bold;
-    text-shadow:0 1px #fff;
-}
-
-.nav-button{
-    position:absolute;
-    top:6px;
-
-    height:32px;
-    min-width:60px;
-
-    padding:0 10px;
-
-    color:#222;
-    font-size:13px;
-    font-weight:bold;
-
-    border:1px solid #777;
-    border-radius:6px;
-
-    background:
-        linear-gradient(
-            #fff,
-            #ededed 48%,
-            #c7c7c7 52%,
-            #ddd
-        );
-
-    box-shadow:
-        inset 0 1px rgba(255,255,255,.9),
-        0 1px 1px rgba(0,0,0,.25);
-
-    text-shadow:0 1px #fff;
-}
-
-.nav-button:active{
-    background:#aaa;
-}
-
-.nav-left{
-    left:7px;
-}
-
-.nav-right{
-    right:7px;
-}
-
-/* =========================================================
-   MAIN CONTENT
-   ========================================================= */
-
-.content{
-    position:absolute;
-    top:44px;
-    bottom:49px;
-    left:0;
-    right:0;
-
-    overflow-y:auto;
-    overflow-x:hidden;
-
-    background:
-        linear-gradient(
-            #f7f7f7,
-            #e5e5e5
-        );
-}
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
-.search-container{
-    padding:8px 9px;
-    background:#d8d8d8;
-    border-bottom:1px solid #aaa;
-}
-
-.search{
-    width:100%;
-    height:31px;
-
-    border-radius:7px;
-    border:1px solid #999;
-
-    padding:0 10px;
-
-    font-size:16px;
-
-    background:#fff;
-
-    box-shadow:
-        inset 0 1px 3px rgba(0,0,0,.2);
-}
-
-/* =========================================================
-   SECTION HEADER
-   ========================================================= */
-
-.section-header{
-    height:29px;
-
-    padding:8px 10px 5px;
-
-    font-size:13px;
-    font-weight:bold;
-
-    color:#555;
-
-    text-shadow:0 1px #fff;
-
-    background:
-        linear-gradient(
-            #eeeeee,
-            #d1d1d1
-        );
-
-    border-bottom:1px solid #aaa;
-}
-
-/* =========================================================
-   SONG ROW
-   ========================================================= */
-
-.song{
-    min-height:59px;
-
-    display:flex;
-    align-items:center;
-
-    padding:6px 9px;
-
-    position:relative;
-
-    background:
-        linear-gradient(
-            #fff,
-            #ededed
-        );
-
-    border-bottom:1px solid #c6c6c6;
-}
-
-.song:active{
-    background:#c6c6c6;
-}
-
-.song-cover{
-    width:46px;
-    height:46px;
-
-    flex:none;
-
-    object-fit:cover;
-
-    border-radius:3px;
-
-    box-shadow:
-        0 1px 3px rgba(0,0,0,.5);
-
-    background:#aaa;
-}
-
-.song-info{
-    min-width:0;
-    flex:1;
-    padding-left:10px;
-}
-
-.song-title{
-    font-size:16px;
-    line-height:20px;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.song-artist{
-    font-size:13px;
-    color:#777;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.song-arrow{
-    color:#999;
-    font-size:25px;
-    margin-left:7px;
-}
-
-.playing{
-    color:#1674b9;
-    font-weight:bold;
-}
-
-/* =========================================================
-   EMPTY
-   ========================================================= */
-
-.empty{
-    text-align:center;
-    padding:45px 20px;
-
-    color:#777;
-    font-size:15px;
-}
-
-.add-button{
-    margin:10px;
-
-    width:calc(100% - 20px);
-    height:38px;
-
-    border:1px solid #888;
-    border-radius:7px;
-
-    font-weight:bold;
-    font-size:14px;
-
-    background:
-        linear-gradient(
-            #fff,
-            #ddd
-        );
-
-    box-shadow:
-        inset 0 1px #fff,
-        0 1px 2px rgba(0,0,0,.25);
-}
-
-/* =========================================================
-   ALBUM GRID
-   ========================================================= */
-
-.album-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-
-    padding:15px 12px;
-}
-
-.album{
-    min-width:0;
-}
-
-.album-cover{
-    width:100%;
-    aspect-ratio:1;
-
-    object-fit:cover;
-
-    border-radius:5px;
-
-    box-shadow:
-        0 2px 5px rgba(0,0,0,.55);
-}
-
-.album-title{
-    margin-top:5px;
-
-    font-size:13px;
-    font-weight:bold;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.album-artist{
-    font-size:11px;
-    color:#777;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-/* =========================================================
-   ARTIST / PLAYLIST ROW
-   ========================================================= */
-
-.simple-row{
-    height:44px;
-
-    display:flex;
-    align-items:center;
-
-    padding:0 12px;
-
-    background:
-        linear-gradient(#fff,#eee);
-
-    border-bottom:1px solid #ccc;
-}
-
-.simple-row-title{
-    flex:1;
-    font-size:16px;
-}
-
-.simple-arrow{
-    font-size:23px;
-    color:#aaa;
-}
-
-/* =========================================================
-   BOTTOM TAB BAR
-   ========================================================= */
-
-.tabs{
-    position:absolute;
-
-    left:0;
-    right:0;
-    bottom:0;
-
-    height:49px;
-
-    z-index:20;
-
-    display:flex;
-
-    background:
-        linear-gradient(
-            #555,
-            #303030
-        );
-
-    border-top:1px solid #111;
-
-    box-shadow:
-        0 -1px 3px rgba(0,0,0,.5);
-}
-
-.tab{
-    flex:1;
-
-    border:0;
-
-    background:transparent;
-
-    color:#aaa;
-
-    font-size:10px;
-
-    text-shadow:0 -1px #111;
-}
-
-.tab-icon{
-    display:block;
-
-    height:25px;
-
-    font-size:21px;
-
-    line-height:23px;
-}
-
-.tab.active{
-    color:#fff;
-}
-
-.tab.active .tab-icon{
-    text-shadow:
-        0 0 7px #fff;
-}
-
-/* =========================================================
-   NOW PLAYING SCREEN
-   ========================================================= */
-
-.player{
-    position:absolute;
-
-    inset:0;
-
-    z-index:100;
-
-    display:none;
-    flex-direction:column;
-
-    background:
-        linear-gradient(
-            #eeeeee,
-            #cfcfcf
-        );
-}
-
-.player.show{
-    display:flex;
-}
-
-.player-navbar{
-    height:44px;
-
-    flex:none;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    position:relative;
-
-    background:
-        linear-gradient(
-            #fafafa,
-            #d0d0d0
-        );
-
-    border-bottom:1px solid #777;
-
-    font-size:18px;
-    font-weight:bold;
-
-    text-shadow:0 1px #fff;
-}
-
-.player-close{
-    position:absolute;
-    left:7px;
-
-    height:31px;
-
-    padding:0 11px;
-
-    border:1px solid #777;
-    border-radius:6px;
-
-    background:
-        linear-gradient(
-            #fff,
-            #ccc
-        );
-
-    font-weight:bold;
-}
-
-.player-body{
-    flex:1;
-
-    overflow:auto;
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-
-    padding:22px 20px;
-}
-
-.player-cover{
-    width:min(75vw,330px);
-    height:min(75vw,330px);
-
-    object-fit:cover;
-
-    border-radius:5px;
-
-    box-shadow:
-        0 4px 9px rgba(0,0,0,.55);
-
-    background:#aaa;
-}
-
-.player-title{
-    margin-top:17px;
-
-    font-size:19px;
-    font-weight:bold;
-
-    text-align:center;
-
-    max-width:95%;
-}
-
-.player-artist{
-    margin-top:3px;
-
-    font-size:14px;
-    color:#666;
-}
-
-.player-album{
-    font-size:13px;
-    color:#888;
-
-    margin-top:2px;
-}
-
-/* =========================================================
-   PROGRESS
-   ========================================================= */
-
-.progress{
-    width:100%;
-    margin-top:22px;
-}
-
-.seek{
-    width:100%;
-
-    margin:0;
-
-    accent-color:#777;
-}
-
-.times{
-    display:flex;
-    justify-content:space-between;
-
-    color:#555;
-    font-size:11px;
-}
-
-/* =========================================================
-   PLAYER CONTROLS
-   ========================================================= */
-
-.controls{
-    width:100%;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-
-    margin-top:18px;
-}
-
-.control{
-    width:50px;
-    height:45px;
-
-    border:0;
-
-    background:transparent;
-
-    font-size:28px;
-
-    color:#333;
-}
-
-.play-button{
-    width:61px;
-    height:61px;
-
-    border-radius:50%;
-
-    border:1px solid #777;
-
-    background:
-        linear-gradient(
-            #fff,
-            #d0d0d0
-        );
-
-    box-shadow:
-        0 2px 4px rgba(0,0,0,.4),
-        inset 0 1px #fff;
-
-    font-size:26px;
-}
-
-.control:active,
-.play-button:active{
-    transform:scale(.94);
-}
-
-/* =========================================================
-   PLAYER OPTIONS
-   ========================================================= */
-
-.player-options{
-    width:100%;
-
-    display:flex;
-    justify-content:space-between;
-
-    margin-top:13px;
-}
-
-.option{
-    border:0;
-    background:transparent;
-
-    color:#555;
-
-    font-size:14px;
-}
-
-.option.active{
-    color:#1674b9;
-    font-weight:bold;
-}
-
-/* =========================================================
-   VOLUME
-   ========================================================= */
-
-.volume{
-    width:100%;
-    margin-top:8px;
-}
-
-.volume input{
-    width:100%;
-    accent-color:#777;
-}
-
-/* =========================================================
-   MINI PLAYER
-   ========================================================= */
-
-.mini-player{
-    position:absolute;
-
-    left:0;
-    right:0;
-
-    bottom:49px;
-
-    height:48px;
-
-    z-index:15;
-
-    display:none;
-    align-items:center;
-
-    padding:4px 8px;
-
-    background:
-        linear-gradient(
-            #fafafa,
-            #d4d4d4
-        );
-
-    border-top:1px solid #999;
-
-    box-shadow:
-        0 -1px 3px rgba(0,0,0,.3);
-}
-
-.mini-player.show{
-    display:flex;
-}
-
-.mini-cover{
-    width:39px;
-    height:39px;
-
-    object-fit:cover;
-
-    border-radius:3px;
-}
-
-.mini-info{
-    flex:1;
-    min-width:0;
-
-    padding-left:9px;
-}
-
-.mini-title{
-    font-size:13px;
-    font-weight:bold;
-
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-}
-
-.mini-artist{
-    font-size:11px;
-    color:#777;
-}
-
-.mini-play{
-    border:0;
-    background:transparent;
-
-    font-size:25px;
-}
-
-/* =========================================================
-   MODAL
-   ========================================================= */
-
-.modal{
-    position:absolute;
-
-    inset:0;
-
-    z-index:200;
-
-    display:none;
-
-    align-items:center;
-    justify-content:center;
-
-    background:rgba(0,0,0,.45);
-}
-
-.modal.show{
-    display:flex;
-}
-
-.modal-box{
-    width:85%;
-    max-width:350px;
-
-    background:#eee;
-
-    border-radius:12px;
-
-    box-shadow:
-        0 5px 25px #000;
-
-    overflow:hidden;
-}
-
-.modal-title{
-    padding:15px;
-
-    text-align:center;
-
-    font-size:18px;
-    font-weight:bold;
-
-    background:
-        linear-gradient(#fff,#ddd);
-}
-
-.modal-row{
-    padding:13px;
-
-    text-align:center;
-
-    border-top:1px solid #ccc;
-
-    background:#fff;
-}
-
-.modal-row:active{
-    background:#ccc;
-}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+html, body {
+  margin: 0; padding: 0; width: 100%; height: 100%;
+  background: #0d0d0d; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+
+/* CARCASA IPOD TOUCH */
+.ipod-frame {
+  width: 360px; height: 690px;
+  background: linear-gradient(135deg, #484b4f 0%, #1a1b1d 50%, #0d0e0f 100%);
+  border-radius: 42px; padding: 18px 18px 22px 18px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.9), inset 0 1px 2px rgba(255,255,255,0.4), inset 0 -2px 5px rgba(0,0,0,0.8);
+  position: relative; display: flex; flex-direction: column; align-items: center; border: 1px solid #555;
+}
+
+.screen {
+  width: 100%; height: 580px; background: #000; border-radius: 6px;
+  position: relative; overflow: hidden; border: 2px solid #1a1a1a;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+.home-button {
+  width: 50px; height: 50px; border-radius: 50%; margin-top: 14px;
+  background: linear-gradient(180deg, #1c1d1f 0%, #101113 100%);
+  border: 1px solid #333; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8), 0 1px 1px rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.home-button:active { background: #0d0e0f; }
+.home-button-icon { width: 16px; height: 16px; border: 2px solid #777; border-radius: 5px; }
+
+/* BARRA DE ESTADO iOS */
+.status {
+  height: 20px; background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+  color: #d1d1d1; display: flex; align-items: center; padding: 0 8px; font-size: 11px; font-weight: bold;
+  position: absolute; top: 0; left: 0; right: 0; z-index: 500; border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.status .time { position: absolute; left: 50%; transform: translateX(-50%); text-shadow: 0 -1px 0 rgba(0,0,0,0.8); }
+.status .right { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+.battery { height: 10px; width: 20px; border: 1px solid #888; border-radius: 2px; padding: 1px; position: relative; }
+.battery:after { content: ""; position: absolute; width: 1.5px; height: 4px; background: #888; right: -3px; top: 2px; }
+.battery b { display: block; width: 85%; height: 100%; background: linear-gradient(180deg, #6ee049, #429f27); }
+
+/* MENU PRINCIPAL (SPRINGBOARD iOS 4) */
+.springboard {
+  position: absolute; inset: 0; top: 20px;
+  background: radial-gradient(circle at center, #2c3e50 0%, #0f171e 100%);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 2px, transparent 0), radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+  background-size: 20px 20px, 10px 10px;
+  display: flex; flex-direction: column; justify-content: space-between; padding: 18px 12px 8px 12px;
+}
+
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 10px; padding-top: 8px; }
+.app-icon { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+.icon-box {
+  width: 54px; height: 54px; border-radius: 12px; position: relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center; font-size: 24px; color: white;
+  overflow: hidden; border: 1px solid rgba(0,0,0,0.3);
+}
+.icon-box::after {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.08) 100%);
+  border-radius: 11px 11px 0 0; pointer-events: none;
+}
+.app-icon label { color: #fff; font-size: 11px; margin-top: 4px; text-shadow: 0 1px 2px rgba(0,0,0,0.9); font-weight: 500; }
+
+.icon-music { background: linear-gradient(180deg, #ff7a00 0%, #ff2d55 100%); }
+.icon-photos { background: linear-gradient(180deg, #ffffff 0%, #d1d1d1 100%); color: #333; }
+.icon-safari { background: linear-gradient(180deg, #2b92e4 0%, #1459a6 100%); }
+.icon-videos { background: linear-gradient(180deg, #00c6ff 0%, #0072ff 100%); }
+.icon-appstore { background: linear-gradient(180deg, #1d976c 0%, #93f9b9 100%); }
+.icon-settings { background: linear-gradient(180deg, #8a8a8e 0%, #3a3a3c 100%); }
+.icon-notes { background: linear-gradient(180deg, #f7d046 0%, #f39c12 100%); }
+.icon-clock { background: linear-gradient(180deg, #2c3e50 0%, #000000 100%); }
+.icon-calc { background: linear-gradient(180deg, #f39c12 0%, #d35400 100%); }
+.icon-camera { background: linear-gradient(180deg, #a8a8a8 0%, #5a5a5a 100%); }
+.icon-mail { background: linear-gradient(180deg, #3498db 0%, #2980b9 100%); }
+.icon-maps { background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%); }
+
+.dock-container { width: 100%; }
+.dock-glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 20%, rgba(0,0,0,0.4) 100%);
+  border-top: 1px solid rgba(255,255,255,0.4); border-radius: 4px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.5); padding: 6px 8px; display: flex; justify-style: space-around;
+  display: flex; justify-content: space-around;
+}
+.page-dots { display: flex; justify-content: center; gap: 6px; margin-bottom: 6px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.4); }
+.dot.active { background: #fff; }
+
+/* APP DE MÚSICA */
+.app-window {
+  position: absolute; inset: 0; top: 20px; background: #000; z-index: 400;
+  display: none; flex-direction: column; transform: scale(0.85); opacity: 0;
+  transition: transform 0.22s ease-out, opacity 0.22s ease-out;
+}
+.app-window.open { display: flex; transform: scale(1); opacity: 1; }
+
+.app-header {
+  height: 42px; background: linear-gradient(180deg, #b0b8c0 0%, #828e99 50%, #687582 51%, #505c68 100%);
+  border-bottom: 1px solid #2d353d; display: flex; align-items: center; justify-content: space-between; padding: 0 10px;
+  color: #fff; text-shadow: 0 -1px 0 rgba(0,0,0,0.7); font-weight: bold; font-size: 15px;
+}
+.header-btn {
+  background: linear-gradient(180deg, #7c8895 0%, #4b5663 100%); border: 1px solid #333;
+  border-radius: 4px; color: #fff; font-size: 11px; padding: 4px 8px; font-weight: bold; cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.content-area { flex: 1; position: relative; overflow: hidden; background: #fff; }
+.view { position: absolute; inset: 0; display: none; flex-direction: column; background: #fff; }
+.view.active { display: flex; }
+
+.section-title {
+  background: linear-gradient(180deg, #d2d7dc 0%, #b8bec5 100%); color: #333; font-size: 12px; font-weight: bold;
+  padding: 3px 10px; border-bottom: 1px solid #999; text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.music-list { list-style: none; margin: 0; padding: 0; flex: 1; overflow-y: auto; }
+.music-item {
+  display: flex; align-items: center; padding: 8px 10px; border-bottom: 1px solid #e0e0e0; cursor: pointer;
+}
+.music-item:active { background: linear-gradient(180deg, #058bfb 0%, #015eea 100%); color: white; }
+.music-item img { width: 42px; height: 42px; border-radius: 3px; object-fit: cover; margin-right: 10px; border: 1px solid #ccc; }
+.music-info { flex: 1; overflow: hidden; }
+.music-title { font-size: 14px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #000; }
+.music-sub { font-size: 12px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.music-item:active .music-title, .music-item:active .music-sub { color: #fff; }
+
+.albums-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; overflow-y: auto; flex: 1; }
+.album-card { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; }
+.album-card img { width: 110px; height: 110px; border-radius: 4px; box-shadow: 0 3px 6px rgba(0,0,0,0.3); border: 1px solid #ddd; object-fit: cover; }
+.album-card span { font-size: 12px; font-weight: bold; margin-top: 4px; color: #111; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.now-playing { background: #111; color: white; align-items: center; justify-content: space-around; padding: 10px; }
+.art-container {
+  width: 220px; height: 220px; border-radius: 6px; box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+  overflow: hidden; border: 1px solid #333; margin-top: 10px;
+}
+.art-container img { width: 100%; height: 100%; object-fit: cover; }
+
+.track-meta { text-align: center; width: 100%; padding: 0 10px; margin-top: 10px; }
+.track-meta .title { font-size: 16px; font-weight: bold; color: #fff; }
+.track-meta .artist { font-size: 13px; color: #aaa; margin-top: 2px; }
+
+.scrubber { width: 100%; padding: 0 15px; margin-top: 10px; }
+.scrubber input { width: 100%; accent-color: #007aff; }
+.time-box { display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-top: 2px; }
+
+.controls { display: flex; align-items: center; justify-content: center; gap: 30px; margin-bottom: 15px; }
+.ctrl-btn { background: none; border: none; color: #fff; font-size: 26px; cursor: pointer; opacity: 0.9; }
+.ctrl-btn:active { opacity: 0.5; }
+
+.tab-bar {
+  height: 48px; background: linear-gradient(180deg, #2c2c2c 0%, #111111 100%);
+  border-top: 1px solid #000; display: flex; justify-content: space-around; align-items: center;
+}
+.tab { display: flex; flex-direction: column; align-items: center; color: #8e8e93; font-size: 10px; cursor: pointer; text-decoration: none; }
+.tab.active { color: #007aff; }
+.tab-icon { font-size: 18px; margin-bottom: 2px; }
 </style>
 </head>
-
-
 <body>
 
-<div class="device">
-
-    <!-- =====================================================
-         TOP BAR
-         ===================================================== -->
-
-    <header class="navbar">
-
-        <button
-            class="nav-button nav-left"
-            id="backButton"
-            style="display:none"
-            onclick="goBack()">
-            ‹ Atrás
-        </button>
-
-        <div
-            class="nav-title"
-            id="navTitle">
-            Canciones
-        </div>
-
-        <button
-            class="nav-button nav-right"
-            onclick="openAdd()">
-            +
-        </button>
-
-    </header>
-
-
-    <!-- =====================================================
-         CONTENT
-         ===================================================== -->
-
-    <main class="content">
-
-        <div
-            class="search-container"
-            id="searchContainer">
-
-            <input
-                class="search"
-                id="search"
-                type="search"
-                placeholder="Buscar"
-                autocomplete="off">
-
-        </div>
-
-        <div id="contentArea"></div>
-
-    </main>
-
-
-    <!-- =====================================================
-         MINI PLAYER
-         ===================================================== -->
-
-    <div
-        class="mini-player"
-        id="miniPlayer"
-        onclick="openPlayer()">
-
-        <img
-            class="mini-cover"
-            id="miniCover">
-
-        <div class="mini-info">
-
-            <div
-                class="mini-title"
-                id="miniTitle">
-                Ninguna canción
-            </div>
-
-            <div
-                class="mini-artist"
-                id="miniArtist">
-                ---
-            </div>
-
-        </div>
-
-        <button
-            class="mini-play"
-            id="miniPlay"
-            onclick="event.stopPropagation();togglePlay()">
-            ▶
-        </button>
-
+<div class="ipod-frame">
+  <div class="screen">
+    <!-- Status Bar -->
+    <div class="status">
+      <span>iPod</span>
+      <span class="time" id="clock">9:42 AM</span>
+      <span class="right">
+        <span>▶</span>
+        <span class="battery"><b></b></span>
+      </span>
     </div>
 
-
-    <!-- =====================================================
-         BOTTOM TABS
-         ===================================================== -->
-
-    <nav class="tabs">
-
-        <button
-            class="tab active"
-            onclick="changeTab('songs',this)">
-
-            <span class="tab-icon">♫</span>
-            Canciones
-
-        </button>
-
-        <button
-            class="tab"
-            onclick="changeTab('artists',this)">
-
-            <span class="tab-icon">♟</span>
-            Artistas
-
-        </button>
-
-        <button
-            class="tab"
-            onclick="changeTab('albums',this)">
-
-            <span class="tab-icon">▦</span>
-            Álbumes
-
-        </button>
-
-        <button
-            class="tab"
-            onclick="changeTab('playlists',this)">
-
-            <span class="tab-icon">☷</span>
-            Listas
-
-        </button>
-
-        <button
-            class="tab"
-            onclick="changeTab('more',this)">
-
-            <span class="tab-icon">•••</span>
-            Más
-
-        </button>
-
-    </nav>
-
-
-    <!-- =====================================================
-         NOW PLAYING
-         ===================================================== -->
-
-    <section
-        class="player"
-        id="player">
-
-        <header class="player-navbar">
-
-            <button
-                class="player-close"
-                onclick="closePlayer()">
-                ‹ Música
-            </button>
-
-            Ahora suena
-
-        </header>
-
-        <div class="player-body">
-
-            <img
-                class="player-cover"
-                id="playerCover">
-
-            <div
-                class="player-title"
-                id="playerTitle">
-                Ninguna canción
-            </div>
-
-            <div
-                class="player-artist"
-                id="playerArtist">
-                ---
-            </div>
-
-            <div
-                class="player-album"
-                id="playerAlbum">
-                ---
-            </div>
-
-
-            <div class="progress">
-
-                <input
-                    class="seek"
-                    id="seek"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="0">
-
-                <div class="times">
-
-                    <span id="currentTime">
-                        0:00
-                    </span>
-
-                    <span id="totalTime">
-                        0:00
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="controls">
-
-                <button
-                    class="control"
-                    onclick="previous()">
-                    ⏮
-                </button>
-
-                <button
-                    class="play-button"
-                    id="playButton"
-                    onclick="togglePlay()">
-                    ▶
-                </button>
-
-                <button
-                    class="control"
-                    onclick="next()">
-                    ⏭
-                </button>
-
-            </div>
-
-
-            <div class="player-options">
-
-                <button
-                    class="option"
-                    id="shuffleButton"
-                    onclick="toggleShuffle()">
-                    🔀 Aleatorio
-                </button>
-
-                <button
-                    class="option"
-                    id="repeatButton"
-                    onclick="toggleRepeat()">
-                    🔁 Repetir
-                </button>
-
-                <button
-                    class="option"
-                    onclick="toggleFavorite()">
-                    <span id="favoriteIcon">♡</span>
-                </button>
-
-            </div>
-
-
-            <div class="volume">
-
-                <input
-                    type="range"
-                    id="volume"
-                    min="0"
-                    max="1"
-                    step=".01"
-                    value=".8">
-
-            </div>
-
+    <!-- Menú Home (Springboard) -->
+    <div class="springboard" id="springboard">
+      <div class="grid">
+        <div class="app-icon" onclick="openMusicApp()">
+          <div class="icon-box icon-music">♫</div>
+          <label>Música</label>
+        </div>
+        <div class="app-icon" onclick="alert('Abriendo Fotos...')">
+          <div class="icon-box icon-photos">🖼</div>
+          <label>Fotos</label>
+        </div>
+        <div class="app-icon" onclick="alert('Abriendo Vídeos...')">
+          <div class="icon-box icon-videos">🎬</div>
+          <label>Vídeos</label>
+        </div>
+        <div class="app-icon" onclick="alert('Abriendo Safari...')">
+          <div class="icon-box icon-safari">🧭</div>
+          <label>Safari</label>
         </div>
 
-    </section>
-
-
-    <!-- =====================================================
-         MODAL
-         ===================================================== -->
-
-    <div
-        class="modal"
-        id="modal"
-        onclick="closeModal(event)">
-
-        <div
-            class="modal-box"
-            onclick="event.stopPropagation()">
-
-            <div class="modal-title">
-                Añadir música
-            </div>
-
-            <div
-                class="modal-row"
-                onclick="chooseFiles()">
-                Seleccionar archivos MP3
-            </div>
-
-            <div
-                class="modal-row"
-                onclick="closeModal()">
-                Cancelar
-            </div>
-
+        <div class="app-icon" onclick="alert('Abriendo App Store...')">
+          <div class="icon-box icon-appstore">🅰</div>
+          <label>App Store</label>
+        </div>
+        <div class="app-icon" onclick="alert('Abriendo Notas...')">
+          <div class="icon-box icon-notes">📝</div>
+          <label>Notas</label>
+        </div>
+        <div class="app-icon" onclick="alert('Abriendo Reloj...')">
+          <div class="icon-box icon-clock">⏰</div>
+          <label>Reloj</label>
+        </div>
+        <div class="app-icon" onclick="alert('Abriendo Calculadora...')">
+          <div class="icon-box icon-calc">➕</div>
+          <label>Calculadora</label>
         </div>
 
+        <div class="app-icon" onclick="alert('Abriendo Ajustes...')">
+          <div class="icon-box icon-settings">⚙</div>
+          <label>Ajustes</label>
+        </div>
+        <div class="app-icon" onclick="alert('Abriendo Cámara...')">
+          <div class="icon-box icon-camera">📷</div>
+          <label>Cámara</label>
+        </div>
+        <div class="app-icon" onclick="alert('Abriendo Mail...')">
+          <div class="icon-box icon-mail">✉</div>
+          <label>Mail</label>
+        </div>
+        <div class="app-icon" onclick="alert('Abriendo Mapas...')">
+          <div class="icon-box icon-maps">🗺</div>
+          <label>Mapas</label>
+        </div>
+      </div>
+
+      <div class="dock-container">
+        <div class="page-dots">
+          <div class="dot active"></div>
+          <div class="dot"></div>
+        </div>
+        <div class="dock-glass">
+          <div class="app-icon" onclick="openMusicApp()">
+            <div class="icon-box icon-music">♫</div>
+            <label>Música</label>
+          </div>
+          <div class="app-icon" onclick="alert('Abriendo Safari...')">
+            <div class="icon-box icon-safari">🧭</div>
+            <label>Safari</label>
+          </div>
+          <div class="app-icon" onclick="alert('Abriendo Vídeos...')">
+            <div class="icon-box icon-videos">🎬</div>
+            <label>Vídeos</label>
+          </div>
+          <div class="app-icon" onclick="alert('Abriendo Fotos...')">
+            <div class="icon-box icon-photos">🖼</div>
+            <label>Fotos</label>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- App de Música (Dentro del iPod) -->
+    <div class="app-window" id="appWindow">
+      <div class="app-header">
+        <button class="header-btn" onclick="document.getElementById('fileInput').click()">+ Subir MP3</button>
+        <span id="headerTitle">Canciones</span>
+        <button class="header-btn" onclick="showView('nowPlayingView')">Reproduciendo</button>
+      </div>
 
-    <input
-        id="fileInput"
-        type="file"
-        accept="audio/*"
-        multiple
-        hidden>
+      <input type="file" id="fileInput" accept="audio/*" multiple style="display:none" onchange="handleFiles(this.files)">
 
+      <div class="content-area">
+        <!-- Vista Canciones -->
+        <div class="view active" id="songsView">
+          <div class="section-title">Todas las Canciones</div>
+          <ul class="music-list" id="songsList"></ul>
+        </div>
 
-    <audio id="audio"></audio>
+        <!-- Vista Álbumes -->
+        <div class="view" id="albumsView">
+          <div class="section-title">Álbumes</div>
+          <div class="albums-grid" id="albumsGrid"></div>
+        </div>
 
+        <!-- Vista Reproduciendo -->
+        <div class="view now-playing" id="nowPlayingView">
+          <div class="art-container">
+            <img id="npCover" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='200' height='200' fill='%23222'/></svg>" alt="Cover">
+          </div>
+          <div class="track-meta">
+            <div class="title" id="npTitle">Selecciona una canción</div>
+            <div class="artist" id="npArtist">iPod Touch</div>
+          </div>
+          <div class="scrubber">
+            <input type="range" id="progressBar" value="0" min="0" max="100" oninput="seekTrack(this.value)">
+            <div class="time-box">
+              <span id="currentTime">0:00</span>
+              <span id="duration">0:00</span>
+            </div>
+          </div>
+          <div class="controls">
+            <button class="ctrl-btn" onclick="prevTrack()">⏮</button>
+            <button class="ctrl-btn" id="playBtn" onclick="togglePlay()">▶</button>
+            <button class="ctrl-btn" onclick="nextTrack()">⏭</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Bar Inferior -->
+      <div class="tab-bar">
+        <div class="tab active" id="tabSongs" onclick="switchTab('songsView', this)">
+          <div class="tab-icon">♫</div>
+          <span>Canciones</span>
+        </div>
+        <div class="tab" id="tabAlbums" onclick="switchTab('albumsView', this)">
+          <div class="tab-icon">💽</div>
+          <span>Álbumes</span>
+        </div>
+        <div class="tab" id="tabNP" onclick="switchTab('nowPlayingView', this)">
+          <div class="tab-icon">►</div>
+          <span>Reproduciendo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón Home Físico -->
+  <div class="home-button" onclick="closeMusicApp()">
+    <div class="home-button-icon"></div>
+  </div>
 </div>
 
+<audio id="audioPlayer"></audio>
 
 <script>
+const DEFAULT_COVER = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23222"/><circle cx="100" cy="100" r="60" fill="%23333"/><circle cx="100" cy="100" r="20" fill="%23111"/><text x="50%" y="54%" font-size="28" fill="%23666" text-anchor="middle" font-family="sans-serif">♫</text></svg>';
 
-/* =========================================================
-   STATE
-   ========================================================= */
-
-let songs =
-    JSON.parse(
-        localStorage.getItem("ipodMusicLibrary") || "[]"
-    );
-
+let songs = [];
 let currentIndex = -1;
+const audio = document.getElementById('audioPlayer');
 
-let shuffle = false;
-
-let repeat = false;
-
-let currentTab = "songs";
-
-
-/* =========================================================
-   ELEMENTS
-   ========================================================= */
-
-const audio =
-    document.getElementById("audio");
-
-const fileInput =
-    document.getElementById("fileInput");
-
-const contentArea =
-    document.getElementById("contentArea");
-
-const search =
-    document.getElementById("search");
-
-const defaultCover =
-    createDefaultCover();
-
-
-/* =========================================================
-   DEFAULT COVER
-   ========================================================= */
-
-function createDefaultCover(){
-
-    return "data:image/svg+xml," +
-    encodeURIComponent(`
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="600"
-             height="600">
-
-            <defs>
-                <linearGradient
-                    id="g"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1">
-
-                    <stop
-                        offset="0"
-                        stop-color="#555"/>
-
-                    <stop
-                        offset="1"
-                        stop-color="#111"/>
-
-                </linearGradient>
-            </defs>
-
-            <rect
-                width="600"
-                height="600"
-                fill="url(#g)"/>
-
-            <circle
-                cx="300"
-                cy="300"
-                r="210"
-                fill="#222"/>
-
-            <circle
-                cx="300"
-                cy="300"
-                r="65"
-                fill="#777"/>
-
-            <circle
-                cx="300"
-                cy="300"
-                r="20"
-                fill="#222"/>
-
-        </svg>
-    `);
-
+function openMusicApp() {
+  const win = document.getElementById('appWindow');
+  win.style.display = 'flex';
+  setTimeout(() => win.classList.add('open'), 10);
 }
 
-
-/* =========================================================
-   SAVE
-   ========================================================= */
-
-function save(){
-
-    localStorage.setItem(
-        "ipodMusicLibrary",
-        JSON.stringify(songs)
-    );
-
+function closeMusicApp() {
+  const win = document.getElementById('appWindow');
+  win.classList.remove('open');
+  setTimeout(() => win.style.display = 'none', 220);
 }
 
+function switchTab(viewId, tabEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(viewId).classList.add('active');
+  tabEl.classList.add('active');
 
-/* =========================================================
-   ADD FILES
-   ========================================================= */
-
-function openAdd(){
-
-    document
-        .getElementById("modal")
-        .classList.add("show");
-
+  const titles = { 'songsView': 'Canciones', 'albumsView': 'Álbumes', 'nowPlayingView': 'Reproduciendo' };
+  document.getElementById('headerTitle').textContent = titles[viewId];
 }
 
-
-function chooseFiles(){
-
-    closeModal();
-
-    fileInput.click();
-
+function showView(viewId) {
+  const tabMap = { 'songsView': 'tabSongs', 'albumsView': 'tabAlbums', 'nowPlayingView': 'tabNP' };
+  switchTab(viewId, document.getElementById(tabMap[viewId]));
 }
 
-
-fileInput.addEventListener(
-    "change",
-    function(){
-
-        const files =
-            [...this.files];
-
-        files.forEach(file => {
-
-            songs.push({
-
-                title:
-                    file.name
-                        .replace(/\.[^/.]+$/,""),
-
-                artist:
-                    "Artista desconocido",
-
-                album:
-                    "Álbum desconocido",
-
-                cover:
-                    defaultCover,
-
-                url:
-                    URL.createObjectURL(file),
-
-                favorite:false
-
-            });
-
-        });
-
-        save();
-
-        renderSongs();
-
-        this.value = "";
-
-    }
-);
-
-
-/* =========================================================
-   RENDER SONGS
-   ========================================================= */
-
-function renderSongs(list=songs){
-
-    document
-        .getElementById("searchContainer")
-        .style.display = "block";
-
-    contentArea.innerHTML = "";
-
-    if(!list.length){
-
-        contentArea.innerHTML = `
-
-            <div class="empty">
-
-                <div style="font-size:45px">
-                    ♫
-                </div>
-
-                <br>
-
-                Tu biblioteca está vacía.
-
-                <br><br>
-
-                Pulsa <b>+</b> para añadir música.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    const header =
-        document.createElement("div");
-
-    header.className =
-        "section-header";
-
-    header.textContent =
-        "Canciones";
-
-    contentArea.appendChild(header);
-
-
-    list.forEach(song => {
-
-        const index =
-            songs.indexOf(song);
-
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "song";
-
-        row.innerHTML = `
-
-            <img
-                class="song-cover"
-                src="${song.cover}">
-
-            <div class="song-info">
-
-                <div
-                    class="song-title
-                    ${index === currentIndex
-                    ? "playing"
-                    : ""}">
-
-                    ${safe(song.title)}
-
-                </div>
-
-                <div class="song-artist">
-
-                    ${safe(song.artist)}
-
-                </div>
-
-            </div>
-
-            <div class="song-arrow">
-                ›
-            </div>
-        `;
-
-        row.onclick =
-            () => playSong(index);
-
-        contentArea.appendChild(row);
-
-    });
-
-}
-
-
-/* =========================================================
-   PLAY SONG
-   ========================================================= */
-
-function playSong(index){
-
-    if(!songs[index])
-        return;
-
-    currentIndex = index;
-
-    const song =
-        songs[index];
-
-    audio.src =
-        song.url;
-
-    updatePlayer(song);
-
-    audio.play();
-
-    updatePlayButtons();
-
-    document
-        .getElementById("miniPlayer")
-        .classList.add("show");
-
-    renderCurrent();
-
-}
-
-
-/* =========================================================
-   PLAYER UI
-   ========================================================= */
-
-function updatePlayer(song){
-
-    playerCover.src =
-        song.cover;
-
-    playerTitle.textContent =
-        song.title;
-
-    playerArtist.textContent =
-        song.artist;
-
-    playerAlbum.textContent =
-        song.album;
-
-    miniCover.src =
-        song.cover;
-
-    miniTitle.textContent =
-        song.title;
-
-    miniArtist.textContent =
-        song.artist;
-
-    favoriteIcon.textContent =
-        song.favorite
-        ? "♥"
-        : "♡";
-
-}
-
-
-function openPlayer(){
-
-    document
-        .getElementById("player")
-        .classList.add("show");
-
-}
-
-
-function closePlayer(){
-
-    document
-        .getElementById("player")
-        .classList.remove("show");
-
-}
-
-
-/* =========================================================
-   PLAY / PAUSE
-   ========================================================= */
-
-function togglePlay(){
-
-    if(currentIndex === -1){
-
-        if(songs.length)
-            playSong(0);
-
-        return;
-
-    }
-
-
-    if(audio.paused){
-
-        audio.play();
-
-    }else{
-
-        audio.pause();
-
-    }
-
-}
-
-
-function updatePlayButtons(){
-
-    const playing =
-        !audio.paused;
-
-    playButton.textContent =
-        playing ? "Ⅱ" : "▶";
-
-    miniPlay.textContent =
-        playing ? "Ⅱ" : "▶";
-
-}
-
-
-/* =========================================================
-   NEXT
-   ========================================================= */
-
-function next(){
-
-    if(!songs.length)
-        return;
-
-    let index;
-
-    if(shuffle){
-
-        index =
-            Math.floor(
-                Math.random() *
-                songs.length
-            );
-
-    }else{
-
-        index =
-            currentIndex + 1;
-
-        if(index >= songs.length)
-            index = 0;
-
-    }
-
-    playSong(index);
-
-}
-
-
-/* =========================================================
-   PREVIOUS
-   ========================================================= */
-
-function previous(){
-
-    if(!songs.length)
-        return;
-
-    if(audio.currentTime > 3){
-
-        audio.currentTime = 0;
-
-        return;
-
-    }
-
-    let index =
-        currentIndex - 1;
-
-    if(index < 0)
-        index = songs.length - 1;
-
-    playSong(index);
-
-}
-
-
-/* =========================================================
-   AUDIO EVENTS
-   ========================================================= */
-
-audio.addEventListener(
-    "play",
-    updatePlayButtons
-);
-
-audio.addEventListener(
-    "pause",
-    updatePlayButtons
-);
-
-
-audio.addEventListener(
-    "timeupdate",
-    function(){
-
-        if(!audio.duration)
-            return;
-
-        seek.value =
-            (audio.currentTime /
-            audio.duration) * 100;
-
-        currentTime.textContent =
-            formatTime(
-                audio.currentTime
-            );
-
-    }
-);
-
-
-audio.addEventListener(
-    "loadedmetadata",
-    function(){
-
-        totalTime.textContent =
-            formatTime(audio.duration);
-
-    }
-);
-
-
-audio.addEventListener(
-    "ended",
-    function(){
-
-        if(repeat){
-
-            audio.currentTime = 0;
-
-            audio.play();
-
-        }else{
-
-            next();
-
+function handleFiles(files) {
+  Array.from(files).forEach(file => {
+    if (!file.type.startsWith('audio/')) return;
+
+    const songObj = {
+      file: file,
+      url: URL.createObjectURL(file),
+      title: file.name.replace(/\.[^/.]+$/, ""),
+      artist: "Artista desconocido",
+      album: "Álbum desconocido",
+      cover: DEFAULT_COVER
+    };
+
+    jsmediatags.read(file, {
+      onSuccess: function(tag) {
+        const tags = tag.tags;
+        if (tags.title) songObj.title = tags.title;
+        if (tags.artist) songObj.artist = tags.artist;
+        if (tags.album) songObj.album = tags.album;
+
+        if (tags.picture) {
+          const { data, format } = tags.picture;
+          let base64String = "";
+          for (let i = 0; i < data.length; i++) {
+            base64String += String.fromCharCode(data[i]);
+          }
+          songObj.cover = `data:${format};base64,${btoa(base64String)}`;
         }
-
-    }
-);
-
-
-/* =========================================================
-   SEEK
-   ========================================================= */
-
-seek.addEventListener(
-    "input",
-    function(){
-
-        if(!audio.duration)
-            return;
-
-        audio.currentTime =
-            (this.value / 100) *
-            audio.duration;
-
-    }
-);
-
-
-/* =========================================================
-   VOLUME
-   ========================================================= */
-
-volume.addEventListener(
-    "input",
-    function(){
-
-        audio.volume =
-            this.value;
-
-    }
-);
-
-audio.volume = .8;
-
-
-/* =========================================================
-   SHUFFLE
-   ========================================================= */
-
-function toggleShuffle(){
-
-    shuffle =
-        !shuffle;
-
-    shuffleButton.classList.toggle(
-        "active",
-        shuffle
-    );
-
-}
-
-
-/* =========================================================
-   REPEAT
-   ========================================================= */
-
-function toggleRepeat(){
-
-    repeat =
-        !repeat;
-
-    repeatButton.classList.toggle(
-        "active",
-        repeat
-    );
-
-}
-
-
-/* =========================================================
-   FAVORITE
-   ========================================================= */
-
-function toggleFavorite(){
-
-    if(currentIndex < 0)
-        return;
-
-    songs[currentIndex].favorite =
-        !songs[currentIndex].favorite;
-
-    favoriteIcon.textContent =
-        songs[currentIndex].favorite
-        ? "♥"
-        : "♡";
-
-    save();
-
-}
-
-
-/* =========================================================
-   TABS
-   ========================================================= */
-
-function changeTab(tab,button){
-
-    currentTab =
-        tab;
-
-    document
-        .querySelectorAll(".tab")
-        .forEach(x =>
-            x.classList.remove("active")
-        );
-
-    button.classList.add("active");
-
-    document
-        .getElementById("backButton")
-        .style.display = "none";
-
-    search.value = "";
-
-
-    if(tab === "songs"){
-
-        navTitle.textContent =
-            "Canciones";
-
         renderSongs();
-
-    }
-
-
-    if(tab === "artists"){
-
-        navTitle.textContent =
-            "Artistas";
-
-        renderArtists();
-
-    }
-
-
-    if(tab === "albums"){
-
-        navTitle.textContent =
-            "Álbumes";
-
         renderAlbums();
-
-    }
-
-
-    if(tab === "playlists"){
-
-        navTitle.textContent =
-            "Listas";
-
-        renderPlaylists();
-
-    }
-
-
-    if(tab === "more"){
-
-        navTitle.textContent =
-            "Más";
-
-        renderMore();
-
-    }
-
-}
-
-
-/* =========================================================
-   ARTISTS
-   ========================================================= */
-
-function renderArtists(){
-
-    searchContainer.style.display =
-        "none";
-
-    contentArea.innerHTML = "";
-
-    const artists =
-        [...new Set(
-            songs.map(x => x.artist)
-        )];
-
-    artists.forEach(artist => {
-
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "simple-row";
-
-        row.innerHTML = `
-
-            <div class="simple-row-title">
-                ${safe(artist)}
-            </div>
-
-            <div class="simple-arrow">
-                ›
-            </div>
-
-        `;
-
-        row.onclick = () => {
-
-            renderSongs(
-                songs.filter(
-                    x => x.artist === artist
-                )
-            );
-
-            navTitle.textContent =
-                artist;
-
-            backButton.style.display =
-                "block";
-
-        };
-
-        contentArea.appendChild(row);
-
+      },
+      onError: function() {
+        renderSongs();
+        renderAlbums();
+      }
     });
 
+    songs.push(songObj);
+  });
+  renderSongs();
+  renderAlbums();
 }
 
-
-/* =========================================================
-   ALBUMS
-   ========================================================= */
-
-function renderAlbums(){
-
-    searchContainer.style.display =
-        "none";
-
-    contentArea.innerHTML = "";
-
-    const grid =
-        document.createElement("div");
-
-    grid.className =
-        "album-grid";
-
-    const albums = {};
-
-    songs.forEach(song => {
-
-        if(!albums[song.album])
-            albums[song.album] =
-                song;
-
-    });
-
-
-    Object.entries(albums)
-        .forEach(([album,song]) => {
-
-            const div =
-                document.createElement("div");
-
-            div.className =
-                "album";
-
-            div.innerHTML = `
-
-                <img
-                    class="album-cover"
-                    src="${song.cover}">
-
-                <div class="album-title">
-                    ${safe(album)}
-                </div>
-
-                <div class="album-artist">
-                    ${safe(song.artist)}
-                </div>
-
-            `;
-
-            div.onclick = () => {
-
-                renderSongs(
-                    songs.filter(
-                        x => x.album === album
-                    )
-                );
-
-                navTitle.textContent =
-                    album;
-
-                backButton.style.display =
-                    "block";
-
-            };
-
-            grid.appendChild(div);
-
-        });
-
-
-    contentArea.appendChild(grid);
-
-}
-
-
-/* =========================================================
-   PLAYLISTS
-   ========================================================= */
-
-function renderPlaylists(){
-
-    searchContainer.style.display =
-        "none";
-
-    contentArea.innerHTML = "";
-
-
-    const lists = [
-
-        ["Todas las canciones",songs.length],
-
-        [
-            "Añadidas recientemente",
-            songs.length
-        ],
-
-        [
-            "Favoritos",
-            songs.filter(
-                x => x.favorite
-            ).length
-        ]
-
-    ];
-
-
-    lists.forEach(([name,count]) => {
-
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "simple-row";
-
-        row.innerHTML = `
-
-            <div class="simple-row-title">
-
-                ${name}
-
-                <span
-                    style="
-                    color:#999;
-                    font-size:12px;
-                    margin-left:6px">
-
-                    ${count}
-
-                </span>
-
-            </div>
-
-            <div class="simple-arrow">
-                ›
-            </div>
-
-        `;
-
-
-        row.onclick = () => {
-
-            let list = songs;
-
-            if(name === "Favoritos"){
-
-                list =
-                    songs.filter(
-                        x => x.favorite
-                    );
-
-            }
-
-            renderSongs(list);
-
-            navTitle.textContent =
-                name;
-
-            backButton.style.display =
-                "block";
-
-        };
-
-
-        contentArea.appendChild(row);
-
-    });
-
-}
-
-
-/* =========================================================
-   MORE
-   ========================================================= */
-
-function renderMore(){
-
-    searchContainer.style.display =
-        "none";
-
-    contentArea.innerHTML = `
-
-        <div class="section-header">
-            Biblioteca
-        </div>
-
-        <div class="simple-row">
-
-            <div class="simple-row-title">
-                Canciones
-            </div>
-
-            <div>
-                ${songs.length}
-            </div>
-
-        </div>
-
-        <div class="section-header">
-            Opciones
-        </div>
-
-        <div
-            class="simple-row"
-            onclick="openAdd()">
-
-            <div class="simple-row-title">
-                Añadir música
-            </div>
-
-            <div class="simple-arrow">
-                ›
-            </div>
-
-        </div>
-
-        <div
-            class="simple-row"
-            onclick="clearLibrary()">
-
-            <div class="simple-row-title"
-                 style="color:#c00">
-
-                Borrar biblioteca
-
-            </div>
-
-            <div class="simple-arrow">
-                ›
-            </div>
-
-        </div>
-
+function renderSongs() {
+  const list = document.getElementById('songsList');
+  list.innerHTML = '';
+  songs.forEach((song, index) => {
+    const li = document.createElement('li');
+    li.className = 'music-item';
+    li.onclick = () => playSong(index);
+    li.innerHTML = `
+      <img src="${song.cover}">
+      <div class="music-info">
+        <div class="music-title">${song.title}</div>
+        <div class="music-sub">${song.artist} — ${song.album}</div>
+      </div>
     `;
-
+    list.appendChild(li);
+  });
 }
 
+function renderAlbums() {
+  const grid = document.getElementById('albumsGrid');
+  grid.innerHTML = '';
+  const albums = {};
 
-/* =========================================================
-   BACK
-   ========================================================= */
-
-function goBack(){
-
-    backButton.style.display =
-        "none";
-
-    changeTab(
-        currentTab,
-        document.querySelector(
-            ".tab.active"
-        )
-    );
-
-}
-
-
-/* =========================================================
-   CLEAR LIBRARY
-   ========================================================= */
-
-function clearLibrary(){
-
-    if(
-        confirm(
-            "¿Borrar toda la biblioteca?"
-        )
-    ){
-
-        songs = [];
-
-        currentIndex = -1;
-
-        audio.pause();
-
-        audio.src = "";
-
-        save();
-
-        renderSongs();
-
+  songs.forEach(song => {
+    if (!albums[song.album]) {
+      albums[song.album] = { name: song.album, cover: song.cover, artist: song.artist };
     }
+  });
 
+  Object.values(albums).forEach(album => {
+    const card = document.createElement('div');
+    card.className = 'album-card';
+    card.innerHTML = `<img src="${album.cover}"><span>${album.name}</span>`;
+    grid.appendChild(card);
+  });
 }
 
+function playSong(index) {
+  currentIndex = index;
+  const song = songs[index];
+  audio.src = song.url;
+  audio.play();
 
-/* =========================================================
-   SEARCH
-   ========================================================= */
+  document.getElementById('npTitle').textContent = song.title;
+  document.getElementById('npArtist').textContent = song.artist;
+  document.getElementById('npCover').src = song.cover;
+  document.getElementById('playBtn').textContent = '⏸';
 
-search.addEventListener(
-    "input",
-    function(){
-
-        const q =
-            this.value
-                .toLowerCase()
-                .trim();
-
-        if(!q){
-
-            renderSongs();
-
-            return;
-
-        }
-
-        renderSongs(
-            songs.filter(song =>
-                song.title
-                    .toLowerCase()
-                    .includes(q) ||
-
-                song.artist
-                    .toLowerCase()
-                    .includes(q) ||
-
-                song.album
-                    .toLowerCase()
-                    .includes(q)
-            )
-        );
-
-    }
-);
-
-
-/* =========================================================
-   MODAL
-   ========================================================= */
-
-function closeModal(){
-
-    document
-        .getElementById("modal")
-        .classList.remove("show");
-
+  showView('nowPlayingView');
 }
 
-
-/* =========================================================
-   FORMAT TIME
-   ========================================================= */
-
-function formatTime(seconds){
-
-    if(
-        !seconds ||
-        isNaN(seconds)
-    )
-        return "0:00";
-
-    const minutes =
-        Math.floor(seconds / 60);
-
-    const secondsPart =
-        Math.floor(seconds % 60)
-            .toString()
-            .padStart(2,"0");
-
-    return `${minutes}:${secondsPart}`;
-
+function togglePlay() {
+  if (!audio.src) return;
+  if (audio.paused) {
+    audio.play();
+    document.getElementById('playBtn').textContent = '⏸';
+  } else {
+    audio.pause();
+    document.getElementById('playBtn').textContent = '▶';
+  }
 }
 
-
-/* =========================================================
-   HTML ESCAPE
-   ========================================================= */
-
-function safe(text){
-
-    return String(text)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
+function prevTrack() {
+  if (currentIndex > 0) playSong(currentIndex - 1);
 }
 
-
-/* =========================================================
-   CURRENT VIEW
-   ========================================================= */
-
-function renderCurrent(){
-
-    if(currentTab === "songs")
-        renderSongs();
-
+function nextTrack() {
+  if (currentIndex < songs.length - 1) playSong(currentIndex + 1);
 }
 
+audio.ontimeupdate = () => {
+  if (audio.duration) {
+    const pct = (audio.currentTime / audio.duration) * 100;
+    document.getElementById('progressBar').value = pct;
+    document.getElementById('currentTime').textContent = formatTime(audio.currentTime);
+    document.getElementById('duration').textContent = formatTime(audio.duration);
+  }
+};
 
-/* =========================================================
-   START
-   ========================================================= */
+function seekTrack(val) {
+  if (audio.duration) {
+    audio.currentTime = (val / 100) * audio.duration;
+  }
+}
 
-renderSongs();
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return `${m}:${s < 10 ? '0' : ''}${s}`;
+}
 
+function clock() {
+  let d = new Date(), h = d.getHours(), m = String(d.getMinutes()).padStart(2, '0'), ap = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  document.getElementById('clock').textContent = `${h}:${m} ${ap}`;
+}
+clock();
+setInterval(clock, 1000);
 </script>
-
 </body>
 </html>
