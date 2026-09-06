@@ -18,7 +18,6 @@ html, body {
   justify-content: center;
   overflow: hidden;
 }
-
 /* Outer iPod Hardware Frame */
 .ipod-frame {
   width: 360px;
@@ -45,7 +44,6 @@ html, body {
   border: 2px solid #1a1a1a;
   box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
 }
-
 /* Home Button */
 .home-button {
   width: 52px;
@@ -69,7 +67,6 @@ html, body {
   border: 2px solid #777;
   border-radius: 5px;
 }
-
 /* Status Bar */
 .status {
   height: 20px;
@@ -140,7 +137,6 @@ html, body {
   font-size: 10px;
   font-weight: normal;
 }
-
 /* Glassy Classic iOS Buttons */
 .glassBtn {
   position: absolute;
@@ -175,7 +171,6 @@ html, body {
   background: #c5ccd4;
   overflow-y: auto;
 }
-
 /* iOS Segment Controls */
 .segment-container {
   padding: 8px;
@@ -208,7 +203,6 @@ html, body {
   text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
   background: linear-gradient(180deg, #4682b4 0%, #2a5885 50%, #1d4268 51%, #153250 100%);
 }
-
 .tip {
   text-align: center;
   color: #4a5a6a;
@@ -237,8 +231,7 @@ html, body {
   background: linear-gradient(180deg, #015ddb 0%, #157efb 100%) !important;
   color: white !important;
 }
-.row:active .title, .row:active .artist { color: white !important; text-shadow: 0 -1px 0 rgba(0,0,0,0.4); }
-
+.row:active .title, .row:active .artist { color: white !important; text-shadow: 0 -1px 0 rgba(0,0,0,0.4); } 
 .cover {
   width: 42px;
   height: 42px;
@@ -251,7 +244,6 @@ html, body {
 .info { min-width: 0; flex: 1; }
 .title { font-size: 13px; font-weight: bold; color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .artist { font-size: 11px; color: #666; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
 /* Price/Play Button in list */
 .playBtn {
   height: 24px;
@@ -455,14 +447,12 @@ input[type=file] { display: none; }
         <span class="battery"><b></b></span>
       </span>
     </div>
-
     <!-- Header -->
     <div class="header">
       <button class="glassBtn back" id="back" onclick="goHome()" style="display:none">‹ Back</button>
       <div class="headerTitle" id="headerTitle">iTunes</div>
       <button class="glassBtn queue" onclick="file.click()">+</button>
     </div>
-
     <!-- Main Content / Library View -->
     <main class="home" id="home">
       <div class="segment-container">
@@ -477,7 +467,6 @@ input[type=file] { display: none; }
       </div>
       <div id="list"></div>
     </main>
-
     <!-- Bottom Navigation Bar -->
     <nav class="tabs">
       <button class="active" onclick="tab(this,'music')"><i>♫</i>Music</button>
